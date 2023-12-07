@@ -1,61 +1,101 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { useState } from "react"
+import { View , Text, StyleSheet,TextInput, Button,FlatList,Modal } from "react-native"
+import uuid from 'react-native-uuid'
+//import ModalDelete from "./src/components/ModalDelete"
 
 export default function App() {
-  return (
-    <View  style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.input}/>
-           <Button title="ADD" />
-         </View>
-         <View style={styles.listContainer}>
-           <View style={styles.cardProduct}>
-             <Text style={styles.cardTitle}>Coca Cola</Text>
-             <Text>2200 $</Text>
-             <Button title="DEL"/>
-           </View>
-           <View style={styles.cardProduct}>
-             <Text style={styles.cardTitle}>Fideos</Text>
-             <Text>1800 $</Text>
-             <Button title="DEL"/>
-           </View>
-           <View style={styles.cardProduct}>
-             <Text style={styles.cardTitle}>Fernet</Text>
-             <Text>3200 $</Text>
-             <Button title="DEL"/>
-           </View> 
-     </View>
-    </View>
-  );
+  
+  const [newStudentName,setNewStudentName] = useState("")
+  const [newMarkPercent,setNewMarkPercent] = useState("")
+  const [marks,setMarks] = useState([])
+  const [productSelected,setProductSelected] = useState({})
+  const [modalVisible,setModalVisible] = useState(false) 
+
+  const handlerAddProduct = () => {
+      const newProduct = {
+        id:uuid.v4(),
+        title:newStudentName,
+        price:newMarkPercent,
+      }
+      setMarks(current => [...current,newProduct] )
+      setNewStudentName("")
+      setNewMarkPercent("")
   }
 
-const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:"start",
-    alignItems:"center",
-    marginTop:50
-  },
-  inputContainer:{
-    flexDirection:"row",
-    alignSelf:"stretch",
-    justifyContent:"space-around"
-  },
-  input:{
-    borderWidth:4,
-    paddingHorizontal:10,
-    paddingVertical:5,
-    width: 200
-  },
-  cardProduct: {
-    flexDirection: "row",
-    padding: 10,
-    margin: 10,
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderWidth: 4,
-  },
-  listContainer: {
-    width: "100%"
-  },
-});
+  const handlerModal = (item) => {
+      setProductSelected(item)
+      setModalVisible(true)
+  }
+  const handlerDeleteProduct = () => {
+    setMarks(current => current.filter(product => product.id !== productSelected.id))
+    setModalVisible(false)
+  }
+    return (
+      <View  style={styles.container}>
+      <View style={styles.inputContainer}>
+        <TextInput 
+        style={styles.input}
+        placeholder="Estudiante"
+        value={newStudentName}
+        onChangeText={(t)=> setNewStudentName(t)}
+        />
+        <TextInput 
+        style={styles.input}
+        placeholder="Nota %"
+        value={newMarkPercent}
+        onChangeText={(t)=> setNewMarkPercent(t)}
+        />
+        <Button title="ADD" onPress={handlerAddProduct} />
+      </View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={marks}
+          keyExtractor={item => item.id}
+          renderItem={({item})=> <View style={styles.cardProduct}>
+                                    <Text style={styles.cardTitle}>{item.title}</Text>
+                                    <Text>{item.price} %</Text>
+                                    <Button title="DEL" onPress={() => handlerModal(item)}/>
+                                    </View> }
+        />
+      </View>
+      
+</View>
+
+    )}
+
+
+    const styles = StyleSheet.create({
+      container:{
+        flex:1,
+        backgroundColor: 'pink',
+        justifyContent:"start",
+        alignItems:"center",
+        marginTop:25,
+      },
+      inputContainer:{
+        flexDirection:"row",
+        alignItems:"center",
+        width:"100%",
+        justifyContent:"space-around"
+      },
+      input:{
+        borderWidth:4,
+        paddingHorizontal:10,
+        paddingVertical:5,
+        width:150
+      },
+      listContainer : {
+  
+        width:"100%"
+      },
+      cardProduct:{
+  
+        flexDirection:"row",
+        padding:10,
+        margin:10,
+        justifyContent:"space-around",
+        alignItems:"center",
+        borderWidth:4
+      },
+      
+    });
