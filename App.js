@@ -23,7 +23,7 @@ export default function App() {
              <Text style={styles.cardTitle}>Fernet</Text>
              <Text>3200 $</Text>
              <Button title="DEL"/>
-           </View>
+           </View> 
      </View>
     </View>
   );
