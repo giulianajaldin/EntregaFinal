@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View} from 'react-native'
 import { colors } from '../Global/colors'
 
 const Header = ({title = "Producto"}) => {
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         alignItems:"center"
     },
     text:{
-        fontSize:20
+        fontSize:20,
+        fontFamily:"Josefin"
     }
 })
