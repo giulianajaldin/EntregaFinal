@@ -2,9 +2,11 @@ import { StyleSheet, Text, View , Image, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors } from '../Global/colors'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { addItem } from '../features/cart/cartSlice'
 
 const ItemDetail = ({route}) => {
-
+  const dispatch = useDispatch()
   const product = useSelector((state)=> state.shop.value.productSelected)
   const images = product.images ? product.images : []
 
@@ -16,7 +18,7 @@ const ItemDetail = ({route}) => {
           <Image
             style={styles.image}
             source={{uri:images[2]}}
-            resizeMode='cover's
+            resizeMode='cover'
           />
           <View style={styles.containerText}>
             <Text style={styles.title}>{product.title}</Text>
@@ -24,8 +26,8 @@ const ItemDetail = ({route}) => {
           </View>
           <View style={styles.containerPrice}>
             <Text style={styles.price}>$ {product.price}</Text>
-            <Pressable style={styles.buyNow}>
-              <Text style={styles.buyNowText}>Buy Now</Text>
+            <Pressable style={styles.buyNow} onPress={()=> dispatch(addItem(product)) }>
+              <Text style={styles.buyNowText}>Carrito</Text>
             </Pressable>
           </View>
         </View>
