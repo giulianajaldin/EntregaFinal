@@ -30,5 +30,5 @@ const MainNavigator = () => {
     </NavigationContainer>
   )
 }
-
+//
 export default MainNavigator

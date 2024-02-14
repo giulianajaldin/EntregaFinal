@@ -42,3 +42,4 @@ const styles = StyleSheet.create({
       right:10
     }
 })
+//

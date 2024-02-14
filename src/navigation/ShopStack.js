@@ -28,5 +28,5 @@ const ShopStack = () => {
     </Stack.Navigator>
   )
 }
-
+//
 export default ShopStack

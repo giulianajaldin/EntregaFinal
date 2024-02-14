@@ -15,5 +15,5 @@ const Orders = () => {
 export default Orders
 
 const styles = StyleSheet.create({
-    
+//
 })

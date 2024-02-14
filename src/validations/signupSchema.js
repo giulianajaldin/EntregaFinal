@@ -11,3 +11,4 @@ export const signupSchema = object({
         .oneOf([ref("password")],"los password no son iguales")
         .required("vuelva a ingresar el mail")
 })
+//

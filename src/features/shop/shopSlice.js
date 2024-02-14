@@ -23,7 +23,7 @@ const initialState = {
         }
     }
   })
-
+//
   export const { setProductsFilteredByCategory,setProductSelected} = shopSlice.actions
 
   export default shopSlice.reducer
